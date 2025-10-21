@@ -1,17 +1,34 @@
-# React + Vite
+# TicketO — Book Tickets ASAP!
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TicketO is a **frontend-only ticket booking demo application** built with **React**, **Vite**, and **Tailwind CSS**.  
+It demonstrates a simple event browsing and ticket booking flow, with **User** and **Admin login**, and a modern, responsive UI.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Browse and view available events
+- Click “Book Now” to see ticket summary
+- User and Admin login with simulated authentication
+- Fully responsive design for desktop and mobile
+- Tailwind CSS-powered modern UI
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [React](https://reactjs.org/) — Frontend library
+- [Vite](https://vitejs.dev/) — Fast development server
+- [Tailwind CSS](https://tailwindcss.com/) — Utility-first CSS framework
+- [React Router DOM](https://reactrouter.com/) — Page navigation
 
-## Expanding the ESLint configuration
+## Credentials (Demo Only)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-"# TicketO" 
+| Role  | Email               | Password  |
+|-------|-------------------|-----------|
+| User  | user@example.com   | user123   |
+| Admin | admin@example.com  | admin123  |
+
+## Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/TicketO.git
+cd TicketO
