@@ -12,9 +12,23 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4">
-      <h1 className="text-5xl font-bold mb-6 text-center">TicketO – Book Your Tickets Instantly</h1>
-      <button className="btn-primary mb-10 max-w-xs" onClick={() => navigate("/login")}>
+    <div className="min-h-screen flex flex-col items-center justify-start px-4 relative">
+      {/* Admin Login Button at top-right */}
+      <button
+        className="absolute top-4 right-4 btn-secondary"
+        onClick={() => navigate("/admin-login")}
+      >
+        Admin Login
+      </button>
+
+      <h1 className="text-5xl font-bold mb-6 text-center mt-20">
+        TicketO – Book Your Tickets Instantly
+      </h1>
+
+      <button
+        className="btn-primary mb-10 max-w-xs"
+        onClick={() => navigate("/login")}
+      >
         Browse Events
       </button>
 
