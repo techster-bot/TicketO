@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gradient-to-b from-gray-900 via-gray-800 to-gray-950 text-gray-200 min-h-screen font-sans;
+}
+
+.glass-card {
+  @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl;
+}
+
+.btn-primary {
+  @apply bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-xl w-full transition-all duration-300;
+}

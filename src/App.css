@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom dark gradient background */
+body {
+  @apply bg-gradient-to-b from-gray-900 via-gray-800 to-gray-950 text-gray-200;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Glassmorphism card effect */
+.glass-card {
+  @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl;
+}
