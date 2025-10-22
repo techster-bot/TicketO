@@ -12,19 +12,20 @@ const Login = ({ userType }) => {
   if (userType === "user") {
     // User login credentials
     if (email === "user@example.com" && password === "user123") {
-      navigate("/ticket-summary");
+      navigate("/user-dashboard"); // ✅ Go to User Dashboard now
     } else {
       alert("Invalid user credentials!");
     }
   } else if (userType === "admin") {
     // Admin login credentials
     if (email === "admin@example.com" && password === "admin123") {
-      navigate("/admin-dashboard"); // <-- redirect admin here
+      navigate("/admin-dashboard"); // Admin dashboard as before
     } else {
       alert("Invalid admin credentials!");
     }
   }
 };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center">

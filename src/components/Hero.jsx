@@ -15,11 +15,12 @@ const Hero = () => {
     <div className="min-h-screen flex flex-col items-center justify-start px-4 relative">
       {/* Admin Login Button at top-right */}
       <button
-        className="absolute top-4 right-4 btn-secondary"
-        onClick={() => navigate("/admin-login")}
-      >
-        Admin Login
-      </button>
+  className="absolute top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition"
+  onClick={() => navigate("/admin-login")}
+>
+  Admin Login
+</button>
+
 
       <h1 className="text-5xl font-bold mb-6 text-center mt-20">
         TicketO – Book Your Tickets Instantly
