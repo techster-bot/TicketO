@@ -1,40 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
-  const [events, setEvents] = useState([
-    { id: 1, title: "Concert Night", price: 50, date: "2025-11-01", img: "https://picsum.photos/300/200?1" },
-    { id: 2, title: "Movie Premiere", price: 30, date: "2025-12-10", img: "https://picsum.photos/300/200?2" },
-  ]);
-
+  const [events, setEvents] = useState([]);
   const [newEvent, setNewEvent] = useState({ title: "", price: "", date: "", img: "" });
   const [editingEvent, setEditingEvent] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-
-  const adminName = "Admin";
   const navigate = useNavigate();
 
-  const handleAddOrEdit = (e) => {
+  const adminName = "Admin";
+  const API_BASE = "http://127.0.0.1:5000/api/events";
+
+  // 🔹 Fetch all events from Flask
+  useEffect(() => {
+    fetch(API_BASE)
+      .then((res) => res.json())
+      .then((data) => setEvents(data))
+      .catch((err) => console.error("Error fetching events:", err));
+  }, []);
+
+  // 🔹 Add or Edit Event
+  const handleAddOrEdit = async (e) => {
     e.preventDefault();
     if (!newEvent.title || !newEvent.price || !newEvent.date || !newEvent.img) {
       alert("Please fill all fields!");
       return;
     }
 
-    if (editingEvent) {
-      setEvents(events.map((ev) => (ev.id === editingEvent.id ? { ...newEvent, id: ev.id } : ev)));
-      setEditingEvent(null);
-    } else {
-      setEvents([...events, { ...newEvent, id: Date.now() }]);
-    }
+    try {
+      const method = editingEvent ? "PUT" : "POST";
+      const url = editingEvent ? `${API_BASE}/${editingEvent.id}` : API_BASE;
 
-    setNewEvent({ title: "", price: "", date: "", img: "" });
-    setShowForm(false);
+      await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newEvent),
+      });
+
+      // Refresh event list
+      const updated = await fetch(API_BASE).then((res) => res.json());
+      setEvents(updated);
+
+      setNewEvent({ title: "", price: "", date: "", img: "" });
+      setEditingEvent(null);
+      setShowForm(false);
+    } catch (error) {
+      console.error("Error saving event:", error);
+    }
   };
 
-  const handleDelete = (id) => {
+  // 🔹 Delete Event
+  const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
+      await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
       setEvents(events.filter((ev) => ev.id !== id));
     }
   };
@@ -46,9 +65,7 @@ const AdminDashboard = () => {
   };
 
   const handleLogout = () => {
-    if (window.confirm("Logout admin?")) {
-      navigate("/");
-    }
+    if (window.confirm("Logout admin?")) navigate("/");
   };
 
   return (
