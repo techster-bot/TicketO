@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
@@ -10,12 +10,16 @@ const UserDashboard = () => {
   // Dropdown toggle state
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Sample events (can later come from backend)
-  const sampleEvents = [
-    { id: 1, title: "Concert Night", date: "Oct 25, 2025", price: 20, img: "https://picsum.photos/300/200?1" },
-    { id: 2, title: "Movie Premiere", date: "Nov 1, 2025", price: 15, img: "https://picsum.photos/300/200?2" },
-    { id: 3, title: "Stand-up Comedy", date: "Nov 10, 2025", price: 10, img: "https://picsum.photos/300/200?3" },
-  ];
+  // ✅ State for fetched events
+  const [events, setEvents] = useState([]);
+
+  // ✅ Fetch events from backend when component loads
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/api/events")
+      .then((res) => res.json())
+      .then((data) => setEvents(data))
+      .catch((err) => console.error("Error fetching events:", err));
+  }, []);
 
   // Logout handler
   const handleLogout = () => {
@@ -68,28 +72,45 @@ const UserDashboard = () => {
         Explore and book your favorite events below 🎶
       </p>
 
-      {/* Event Grid */}
+      {/* ✅ Event Grid from Database */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 pb-10">
-        {sampleEvents.map((event) => (
-          <div
-            key={event.id}
-            className="bg-white text-gray-900 shadow-md rounded-xl overflow-hidden w-72 hover:shadow-xl hover:scale-105 transition transform cursor-pointer"
-          >
-            <img src={event.img} alt={event.title} className="w-full h-40 object-cover" />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold">{event.title}</h3>
-              <p className="text-gray-700">${event.price}</p>
-              <p className="text-gray-500 text-sm">{event.date}</p>
+        {events.length > 0 ? (
+          events.map((event) => (
+            <div
+              key={event.id}
+              className="bg-white text-gray-900 shadow-md rounded-xl overflow-hidden w-72 hover:shadow-xl hover:scale-105 transition transform cursor-pointer"
+            >
+              <img
+                src={event.img || "https://via.placeholder.com/300x200"}
+                alt={event.title}
+                className="w-full h-40 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="text-xl font-semibold">{event.title}</h3>
+                {event.price && <p className="text-gray-700">${event.price}</p>}
+                <p className="text-gray-500 text-sm">{event.date}</p>
 
-              <button
-                onClick={() => navigate("/ticket-summary")}
-                className="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-              >
-                Book Now
-              </button>
+                <button
+  onClick={() =>
+    navigate("/ticket-summary", {
+      state: {
+        event: event.title,
+        seat: `A${Math.floor(Math.random() * 20) + 1}`, // random seat for demo
+        price: event.price || 50, // use event price or default
+      },
+    })
+  }
+  className="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+>
+  Book Now
+</button>
+
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-gray-400 text-lg">No events available right now.</p>
+        )}
       </div>
     </div>
   );
